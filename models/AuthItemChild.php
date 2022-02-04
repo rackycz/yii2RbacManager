@@ -137,32 +137,6 @@ ORDER BY $parentColumn";
       'data' => Yii::$app->getDb()->createCommand($sql)->queryAll(),
     ];
   }
-//
-//  public static function getDeepestChildren()
-//  {
-//
-//    $authItemChild = '`' . AuthItemChild::tableName() . '`';
-//    $authAssignment = '`' . AuthAssignment::tableName() . '`';
-//    $authAssignment_itemNameCol = '`item_name`';
-//    $parentColumn = '`parent`';
-//    $childColumn = '`child`';
-//
-//    $sql = "SELECT tmp.$childColumn as $childColumn, SUM(CASE WHEN user_id IS NOT NULL THEN 1 ELSE 0 END) as assignedToNrOfUsers
-//FROM (
-//    SELECT distinct(t1.$childColumn) as $childColumn
-//    FROM $authItemChild t1
-//    LEFT OUTER JOIN $authItemChild t2 ON (t1.$childColumn = t2.$parentColumn)
-//    WHERE t2.$childColumn IS NULL AND t2.$parentColumn IS NULL
-//) AS `tmp`
-//LEFT OUTER JOIN $authAssignment ON $authAssignment.$authAssignment_itemNameCol = `tmp`.$childColumn
-//GROUP BY $childColumn
-//ORDER BY $childColumn";
-//
-//    return [
-//      'code' => $sql,
-//      'data' => Yii::$app->getDb()->createCommand($sql)->queryAll(),
-//    ];
-//  }
 
   public static function getParentsToChildrenArray($inverse = false)
   {
@@ -221,62 +195,6 @@ ORDER BY $parentColumn";
     }
     return $tree;
   }
-
-//  public static function getChildParentTreeData($inverse = false, $children = [], $parentsToChildren = [])
-//  {
-//    if (empty($children)) {
-//      // only executed 1x at the beginning.
-//      $children = self::getDeepestChildren();
-//      $children = \yii\helpers\ArrayHelper::getColumn($children['data'], 'child');
-//    }
-//    if (empty($parentsToChildren)) {
-//      // only executed 1x at the beginning.
-//      $parentsToChildren = self::getParentsToChildrenArray($inverse);
-//    }
-//    $tree = [];
-//    foreach ($children as $child) {
-//      if (isset($parentsToChildren[$child])) {
-//        $tree[$child] = self::getChildParentTreeData($parentsToChildren[$child], $parentsToChildren);
-//      } else {
-//        // if current item has no children it does not create a sub array
-//        $tree[] = $child;
-//      }
-//    }
-//    return $tree;
-//  }
-
-
-//  public function getAuthItemInverseTree($searchedChild, $parents = [], $childrenToParents = [], $level = 0) {
-//
-//    if ($level===0) {
-//      // run only once
-//      $childrenToParents = self::getChildrenToParrentsArray();
-//      $sql = "SELECT distinct(parent) FROM AuthItemChild WHERE child LIKE :searchedChild";
-//      $command = Yii::app()->db->createCommand($sql);
-//      $command->bindValue(':searchedChild',$searchedChild);
-//      $parents = $command->queryColumn();
-//    }
-//
-//    $tree = [];
-//
-//    foreach ($parents as $parent) {
-//      if (isset($childrenToParents[$parent])) {
-//        $tree[$parent] = $this->getAuthItemInverseTree($parent, $childrenToParents[$parent]??[], $childrenToParents, $level+1);
-//      } else {
-//        // if current item has no children it does not create a sub array
-//        $tree[$parent] = [];
-//      }
-//    }
-//
-////    if ($level === 0) {
-////      return [$searchedChild => $tree];
-////    }
-//
-//    return $tree;
-//
-//
-//
-//  }
 
   public static function renderTreeData($tree, $defaultCollapsed = false, $level = 0)
   {
