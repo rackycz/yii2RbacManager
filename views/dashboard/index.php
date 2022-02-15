@@ -195,7 +195,7 @@ echo $this->render('card', [
   ini_set('xdebug.var_display_max_depth', 10);
   ini_set('xdebug.var_display_max_children', 256);
   ini_set('xdebug.var_display_max_data', 1024);
-  $treeData = AuthItemChild::getParentChildTreeData();
+  $treeData = AuthItemChild::getParentChildTreeData(false);
   $tree = AuthItemChild::renderTreeData($treeData);
 
   echo $this->render('card', [
