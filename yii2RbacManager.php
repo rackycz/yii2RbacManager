@@ -15,6 +15,13 @@ namespace app\modules\yii2RbacManager;
 
 /**
  * yii2RbacManager module definition class
+ * Configuration in web.php:
+'modules' => [
+  'yii2RbacManager' => [
+    'class' => 'app\modules\yii2RbacManager\yii2RbacManager',
+    'defaultRoute' => 'dashboard'
+  ],
+],
  */
 class yii2RbacManager extends \yii\base\Module
 {
