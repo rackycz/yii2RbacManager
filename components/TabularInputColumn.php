@@ -29,6 +29,16 @@ class TabularInputColumn extends \yii\grid\DataColumn
   public $inputOptions = [];
 
   /**
+   * @var string Input will always have at least this class
+   */
+  public $defaultInputClass = 'form-control';
+
+  /**
+   * @var string Error class
+   */
+  public $errorInputClass = 'is-invalid';
+
+  /**
    * @var string[] Only these methods from \yii\helpers\Html can be used as $this->activeMethodName
    */
   private $allowedHtmlMethodNames = [
@@ -97,10 +107,10 @@ class TabularInputColumn extends \yii\grid\DataColumn
     if (!empty($model->getErrors($this->attribute))) {
       // array of errors is always returned
       $errorText = $model->getErrors($this->attribute)[0];
-      $errorClass = 'is-invalid';
+      $errorClass = $this->errorInputClass;
     }
 
-    $this->inputOptions['class'] = trim(($this->inputOptions['class'] ?? '') . ' form-control ' . $errorClass);
+    $this->inputOptions['class'] = trim(($this->inputOptions['class'] ?? '') . ' ' . $this->defaultInputClass . ' ' . $errorClass);
     $this->inputOptions['title'] = $errorText;
 
     $htmlMethodName = $this->htmlMethodName;
