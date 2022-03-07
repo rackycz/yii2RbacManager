@@ -102,6 +102,8 @@ class TabularInputColumn extends \yii\grid\DataColumn
       }
     }
 
+    $this->inputOptions['name'] = $this->inputNamePrefix . $this->inputOptions['name'] . $this->attribute;
+
     $this->defaultInputClass = trim($this->defaultInputClass);
 
     $errorText = '';
@@ -127,7 +129,7 @@ class TabularInputColumn extends \yii\grid\DataColumn
       case 'activeTextarea':
       case 'activeTextInput':
         // activeTextInput($model, $attribute, $options = [])
-        return Html::$htmlMethodName($model, $this->inputNamePrefix . $this->inputOptions['name'] . $this->attribute, $this->inputOptions);
+        return Html::$htmlMethodName($model, $this->attribute, $this->inputOptions);
 
       case 'checkbox':
       case 'hiddenInput':
@@ -135,21 +137,21 @@ class TabularInputColumn extends \yii\grid\DataColumn
       case 'textarea':
       case 'textInput':
         // textInput($name, $value = null, $options = [])
-        return Html::$htmlMethodName($this->inputNamePrefix . $this->inputOptions['name'] . $this->attribute, $value, $this->inputOptions);
+        return Html::$htmlMethodName($this->inputOptions['name'], $value, $this->inputOptions);
 
       case 'activeCheckboxList':
       case 'activeDropDownList':
       case 'activeListBox':
       case 'activeRadioList':
         // activeCheckboxList($model, $attribute, $items, $options = [])
-        return Html::$htmlMethodName($model, $this->inputNamePrefix . $this->inputOptions['name'] . $this->attribute, $this->items, $this->inputOptions);
+        return Html::$htmlMethodName($model, $this->attribute, $this->items, $this->inputOptions);
 
       case 'checkboxList':
       case 'dropDownList':
       case 'listBox':
       case 'radioList':
         // checkboxList($name, $selection = null, $items = [], $options = [])
-        return Html::$htmlMethodName($this->inputNamePrefix . $this->inputOptions['name'] . $this->attribute, $value, $this->items, $this->inputOptions);
+        return Html::$htmlMethodName($this->inputOptions['name'], $value, $this->items, $this->inputOptions);
     }
 
   }
