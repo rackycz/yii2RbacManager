@@ -102,15 +102,18 @@ class TabularInputColumn extends \yii\grid\DataColumn
       }
     }
 
+    $this->defaultInputClass = trim($this->defaultInputClass);
+
     $errorText = '';
     $errorClass = '';
     if (!empty($model->getErrors($this->attribute))) {
       // array of errors is always returned
       $errorText = $model->getErrors($this->attribute)[0];
-      $errorClass = $this->errorInputClass;
+      $errorClass = trim($this->errorInputClass);
     }
 
-    $this->inputOptions['class'] = trim(($this->inputOptions['class'] ?? '') . ' ' . $this->defaultInputClass . ' ' . $errorClass);
+    $this->inputOptions['class'] = trim($this->inputOptions['class'] ?? '');
+    $this->inputOptions['class'] = implode(' ', array_filter([$this->inputOptions['class'], $this->defaultInputClass, $errorClass]));
     $this->inputOptions['title'] = $errorText;
 
     $htmlMethodName = $this->htmlMethodName;
