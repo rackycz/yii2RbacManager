@@ -227,7 +227,7 @@ ORDER BY $parentColumn";
         $result .= self::renderTreeData($children, $defaultCollapsed, $level+1);
       } else {
         // if current item has no children it does not create a sub array
-        $result .= $children;
+        $result .= $parent;
       }
       $result .= '</li>';
     }
