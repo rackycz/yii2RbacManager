@@ -410,7 +410,15 @@ echo $this->render('card', [
     }
 
     li.collapsibleLi {
+        list-style: none;
         cursor: pointer;
+        margin-left: 0;
+        padding-left: 1em;
+    }
+
+    li.collapsibleLi:before {
+        content: "⊞";
+        padding-right: 5px;
     }
 
     ul.collapsedUl {
