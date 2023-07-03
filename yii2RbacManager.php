@@ -13,6 +13,8 @@
 
 namespace app\modules\yii2RbacManager;
 
+use Yii;
+
 /**
  * yii2RbacManager module definition class
  * Configuration in web.php:
@@ -29,6 +31,12 @@ class yii2RbacManager extends \yii\base\Module
    * {@inheritdoc}
    */
   public $controllerNamespace = 'app\modules\yii2RbacManager\controllers';
+
+  /**
+   * Default controller and action
+   * @var string
+   */
+  public $defaultRoute = 'dashboard/index';
 
   /**
    * Each value is expected to start with "app\".
@@ -68,6 +76,30 @@ class yii2RbacManager extends \yii\base\Module
   {
     parent::init();
 
-    // custom initialization code goes here
+        $components = Yii::$app->components;
+
+        // Where to search for translations?
+        $components['i18n']['translations']['rbacm'] = [
+            'class' => 'yii\i18n\PhpMessageSource',
+            'basePath' => '@app/modules/yii2RbacManager/messages',
+            'sourceLanguage' => 'en-US',
+        ];
+
+        // If you are using themes, you might need to set the "theme" also for this module:
+        $components['view']['theme'] = [
+            'basePath' => '@app/modules/admin/themes/yii',
+            'baseUrl' => '@web/modules/admin/themes/yii',
+            'pathMap' => [
+                // Standard Yii theme with some enhancements:
+                '@app/views' => '@app/modules/admin/themes/yii',
+                '@app/modules/yii2RbacManager/views' => '@app/modules/admin/themes/yii',
+
+                // Original theme by Accelerate with some enhancements:
+                //'@app/views' => '@app/modules/admin/themes/accelerate',
+                //'@app/modules/yii2RbacManager/views' => '@app/modules/admin/themes/accelerate',
+            ],
+        ];
+
+        Yii::$app->components = $components;
   }
 }
