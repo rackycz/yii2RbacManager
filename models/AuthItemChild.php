@@ -3,6 +3,7 @@
 namespace app\modules\yii2RbacManager\models;
 
 use Yii;
+use yii\helpers\Html;
 use yii\rbac\Item;
 
 /**
@@ -213,7 +214,7 @@ ORDER BY $parentColumn";
     return $tree;
   }
 
-  public static function renderTreeData($tree, $defaultCollapsed = false, $level = 0)
+  public static function renderTreeData($tree, $defaultCollapsed = false, $checkboxName = null, $level = 0)
   {
     $ulClass = '';
     if ($defaultCollapsed && $level > 0) {
@@ -222,16 +223,29 @@ ORDER BY $parentColumn";
     $result = "<ul class='$ulClass'>";
     foreach ($tree as $parent => $children) {
       $result .= '<li class="collapsibleLi">';
-      if (is_array($children) && !empty($children)) {
-        $result .= $parent;
-        $result .= self::renderTreeData($children, $defaultCollapsed, $level+1);
+      if ($checkboxName) {
+        $result .= self::getCheckbox($checkboxName, $parent);
       } else {
-        // if current item has no children it does not create a sub array
         $result .= $parent;
       }
-      $result .= '</li>';
+
+      if (is_array($children) && !empty($children)) {
+          $result .= self::renderTreeData($children, $defaultCollapsed, $checkboxName, $level + 1);
+      }
+
+        $result .= '</li>';
     }
     $result .= '</ul>';
+    return $result;
+  }
+
+  public static function getCheckbox($checkboxName, $value)
+  {
+    $result = Html::checkbox($checkboxName, false, [
+        'value' => $value,
+    ]);
+    $result .= '&nbsp;';
+    $result .= Html::label($value);
     return $result;
   }
 
