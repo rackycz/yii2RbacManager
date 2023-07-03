@@ -424,6 +424,10 @@ echo $this->render('card', [
     ul.collapsedUl {
         display: none;
     }
+
+    ul.tree {
+        padding-left: 1rem;
+    }
 </style>
 
 <script>

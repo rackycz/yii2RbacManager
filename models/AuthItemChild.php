@@ -216,9 +216,9 @@ ORDER BY $parentColumn";
 
   public static function renderTreeData($tree, $defaultCollapsed = false, $checkboxName = null, $level = 0)
   {
-    $ulClass = '';
+    $ulClass = 'tree';
     if ($defaultCollapsed && $level > 0) {
-      $ulClass = 'collapsedUl';
+      $ulClass .= ' collapsedUl';
     }
     $result = "<ul class='$ulClass'>";
     foreach ($tree as $parent => $children) {
