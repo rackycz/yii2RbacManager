@@ -3,6 +3,7 @@
 namespace app\modules\yii2RbacManager\models;
 
 use Yii;
+use yii\rbac\Item;
 
 /**
  * This is the model class for table "auth_item_child".
@@ -107,11 +108,12 @@ GROUP BY tmp.$column";
     ];
   }
 
-  public static function getTopParents($inverse = false)
+  public static function getTopParents($inverse = false, $onlyRoles = false)
   {
 
-    $authItemChild = '`' . AuthItemChild::tableName() . '`';
-    $authAssignment = '`' . AuthAssignment::tableName() . '`';
+    $authItemChild = AuthItemChild::tableName();
+    $authAssignment = AuthAssignment::tableName();
+    $authItem = AuthItem::tableName();
     $authAssignment_itemNameCol = '`item_name`';
     $parentColumn = '`parent`';
     $childColumn = '`child`';
@@ -121,11 +123,18 @@ GROUP BY tmp.$column";
       $childColumn = '`parent`';
     }
 
+    $onlyRolesSql = '';
+    if ($onlyRoles) {
+        $roleId = Item::TYPE_ROLE;
+        $onlyRolesSql = "JOIN $authItem ON ($authItem.name = t1.parent) AND ($authItem.type=$roleId)";
+    }
+
     $sql = "SELECT tmp.$parentColumn as `item`, SUM(CASE WHEN user_id IS NOT NULL THEN 1 ELSE 0 END) as assignedToNrOfUsers 
 FROM (
     SELECT distinct(t1.$parentColumn) as $parentColumn
     FROM $authItemChild t1 
     LEFT OUTER JOIN $authItemChild t2 ON (t1.$parentColumn = t2.$childColumn)
+    $onlyRolesSql
     WHERE t2.$parentColumn IS NULL AND t2.$childColumn IS NULL
 ) AS `tmp`
 LEFT OUTER JOIN $authAssignment ON $authAssignment.$authAssignment_itemNameCol = `tmp`.$parentColumn
@@ -138,11 +147,12 @@ ORDER BY $parentColumn";
     ];
   }
 
-  public static function getParentsToChildrenArray($inverse = false)
+  public static function getParentsToChildrenArray($inverse = false, $onlyRoles = false)
   {
     $groupConcatSeparator = '|';
     $groupConcatSqlLimit = 'SET SESSION group_concat_max_len = 1000000;'; // number of chars. Run it before GROUP_CONCAT
-    $authItemChild = '`' . AuthItemChild::tableName() . '`';
+    $authItemChild = AuthItemChild::tableName();
+    $authItem = AuthItem::tableName();
 
     $parentColumn = 'parent';
     $parentColumnQ = '`' . $parentColumn . '`';
@@ -160,7 +170,14 @@ ORDER BY $parentColumn";
       $concatColumnQ = '`' . $concatColumn . '`';
     }
 
-    $sql = "SELECT $parentColumnQ, GROUP_CONCAT($childColumnQ SEPARATOR '$groupConcatSeparator') $concatColumnQ FROM $authItemChild GROUP BY $parentColumnQ ORDER BY $parentColumnQ";
+    $onlyRolesSql = '';
+    if ($onlyRoles) {
+        $roleId = Item::TYPE_ROLE;
+        $onlyRolesSql = "JOIN $authItem ai1 ON (ai1.name = $authItemChild.parent) AND (ai1.type=$roleId)";
+        $onlyRolesSql .= "JOIN $authItem ai2 ON (ai2.name = $authItemChild.child) AND (ai2.type=$roleId)";
+    }
+
+    $sql = "SELECT $parentColumnQ, GROUP_CONCAT($childColumnQ SEPARATOR '$groupConcatSeparator') $concatColumnQ FROM $authItemChild $onlyRolesSql GROUP BY $parentColumnQ ORDER BY $parentColumnQ";
     Yii::$app->getDb()->createCommand($groupConcatSqlLimit)->execute();
     $parents = Yii::$app->getDb()->createCommand($sql)->queryAll();
 
@@ -173,24 +190,24 @@ ORDER BY $parentColumn";
     return $result;
   }
 
-  public static function getParentChildTreeData($inverse = false, $parents = [], $parentsToChildren = [])
+  public static function getParentChildTreeData($inverse = false, $parents = [], $parentsToChildren = [], $onlyRoles = false)
   {
     if (empty($parents)) {
       // only executed 1x at the beginning.
-      $parents = self::getTopParents($inverse);
+      $parents = self::getTopParents($inverse, $onlyRoles);
       $parents = \yii\helpers\ArrayHelper::getColumn($parents['data'], 'item');
     }
     if (empty($parentsToChildren)) {
       // only executed 1x at the beginning.
-      $parentsToChildren = self::getParentsToChildrenArray($inverse);
+      $parentsToChildren = self::getParentsToChildrenArray($inverse, $onlyRoles);
     }
     $tree = [];
     foreach ($parents as $parent) {
       if (isset($parentsToChildren[$parent])) {
-        $tree[$parent] = self::getParentChildTreeData($inverse, $parentsToChildren[$parent], $parentsToChildren);
+        $tree[$parent] = self::getParentChildTreeData($inverse, $parentsToChildren[$parent], $parentsToChildren, $onlyRoles);
       } else {
         // if current item has no children it does not create a sub array
-        $tree[] = $parent;
+        $tree[$parent] = [];
       }
     }
     return $tree;
