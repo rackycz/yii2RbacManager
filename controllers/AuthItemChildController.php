@@ -2,16 +2,16 @@
 
 namespace app\modules\yii2RbacManager\controllers;
 
-use app\modules\yii2RbacManager\models\AuthItem;
-use app\modules\yii2RbacManager\models\search\AuthItemSearch;
+use app\controllers\BaseController;
+use app\modules\yii2RbacManager\models\AuthItemChild;
+use app\modules\yii2RbacManager\models\search\AuthItemChild as AuthItemChildSearch;
 use yii\filters\VerbFilter;
-use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 
 /**
- * AuthItemController implements the CRUD actions for AuthItem model.
+ * AuthItemChildController implements the CRUD actions for AuthItemChild model.
  */
-class AuthItemController extends Controller
+class AuthItemChildController extends BaseController
 {
     /**
      * @inheritDoc
@@ -32,12 +32,13 @@ class AuthItemController extends Controller
     }
 
     /**
-     * Lists all AuthItem models.
-     * @return mixed
+     * Lists all AuthItemChild models.
+     *
+     * @return string
      */
     public function actionIndex()
     {
-        $searchModel = new AuthItemSearch();
+        $searchModel = new AuthItemChildSearch();
         $dataProvider = $searchModel->search($this->request->queryParams);
 
         return $this->render('index', [
@@ -47,46 +48,48 @@ class AuthItemController extends Controller
     }
 
     /**
-     * Displays a single AuthItem model.
-     * @param string $name Name
-     * @return mixed
+     * Displays a single AuthItemChild model.
+     * @param string $parent
+     * @param string $child
+     * @return string
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionView($name)
+    public function actionView($parent, $child)
     {
         return $this->render('view', [
-            'model' => $this->findModel($name),
+            'model' => $this->findModel($parent, $child),
         ]);
     }
 
     /**
-     * Finds the AuthItem model based on its primary key value.
+     * Finds the AuthItemChild model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param string $name Name
-     * @return AuthItem the loaded model
+     * @param string $parent
+     * @param string $child
+     * @return AuthItemChild the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
-    protected function findModel($name)
+    protected function findModel($parent, $child)
     {
-        if (($model = AuthItem::findOne($name)) !== null) {
+        if (($model = AuthItemChild::findOne(['parent' => $parent, 'child' => $child])) !== null) {
             return $model;
         }
 
-        throw new NotFoundHttpException(Yii::t('AuthItem', 'The requested page does not exist.'));
+        throw new NotFoundHttpException(Yii::t('AuthItemChild', 'The requested page does not exist.'));
     }
 
     /**
-     * Creates a new AuthItem model.
+     * Creates a new AuthItemChild model.
      * If creation is successful, the browser will be redirected to the 'view' page.
-     * @return mixed
+     * @return string|\yii\web\Response
      */
     public function actionCreate()
     {
-        $model = new AuthItem();
+        $model = new AuthItemChild();
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post()) && $model->save()) {
-                return $this->redirect(['view', 'name' => $model->name]);
+                return $this->redirect(['view', 'parent' => $model->parent, 'child' => $model->child]);
             }
         } else {
             $model->loadDefaultValues();
@@ -98,18 +101,19 @@ class AuthItemController extends Controller
     }
 
     /**
-     * Updates an existing AuthItem model.
+     * Updates an existing AuthItemChild model.
      * If update is successful, the browser will be redirected to the 'view' page.
-     * @param string $name Name
-     * @return mixed
+     * @param string $parent
+     * @param string $child
+     * @return string|\yii\web\Response
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionUpdate($name)
+    public function actionUpdate($parent, $child)
     {
-        $model = $this->findModel($name);
+        $model = $this->findModel($parent, $child);
 
         if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'name' => $model->name]);
+            return $this->redirect(['view', 'parent' => $model->parent, 'child' => $model->child]);
         }
 
         return $this->render('update', [
@@ -118,15 +122,16 @@ class AuthItemController extends Controller
     }
 
     /**
-     * Deletes an existing AuthItem model.
+     * Deletes an existing AuthItemChild model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param string $name Name
-     * @return mixed
+     * @param string $parent
+     * @param string $child
+     * @return \yii\web\Response
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionDelete($name)
+    public function actionDelete($parent, $child)
     {
-        $this->findModel($name)->delete();
+        $this->findModel($parent, $child)->delete();
 
         return $this->redirect(['index']);
     }

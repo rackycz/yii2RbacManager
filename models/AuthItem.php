@@ -41,7 +41,8 @@ class AuthItem extends \yii\db\ActiveRecord
    */
   public static function tableName()
   {
-    return \Yii::$app->controller->module->authItem['tableName'];
+    return '{{%auth_item}}';
+    //return \Yii::$app->controller->module->authItem['tableName'];
   }
 
   /**

@@ -2,16 +2,16 @@
 
 namespace app\modules\yii2RbacManager\controllers;
 
-use app\modules\yii2RbacManager\models\AuthItem;
-use app\modules\yii2RbacManager\models\search\AuthItemSearch;
+use app\controllers\BaseController;
+use app\modules\yii2RbacManager\models\AuthAssignment;
+use app\modules\yii2RbacManager\models\search\AuthAssignment as AuthAssignmentSearch;
 use yii\filters\VerbFilter;
-use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 
 /**
- * AuthItemController implements the CRUD actions for AuthItem model.
+ * AuthAssignmentController implements the CRUD actions for AuthAssignment model.
  */
-class AuthItemController extends Controller
+class AuthAssignmentController extends BaseController
 {
     /**
      * @inheritDoc
@@ -32,12 +32,13 @@ class AuthItemController extends Controller
     }
 
     /**
-     * Lists all AuthItem models.
-     * @return mixed
+     * Lists all AuthAssignment models.
+     *
+     * @return string
      */
     public function actionIndex()
     {
-        $searchModel = new AuthItemSearch();
+        $searchModel = new AuthAssignmentSearch();
         $dataProvider = $searchModel->search($this->request->queryParams);
 
         return $this->render('index', [
@@ -47,46 +48,48 @@ class AuthItemController extends Controller
     }
 
     /**
-     * Displays a single AuthItem model.
-     * @param string $name Name
-     * @return mixed
+     * Displays a single AuthAssignment model.
+     * @param string $item_name
+     * @param int $user_id
+     * @return string
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionView($name)
+    public function actionView($item_name, $user_id)
     {
         return $this->render('view', [
-            'model' => $this->findModel($name),
+            'model' => $this->findModel($item_name, $user_id),
         ]);
     }
 
     /**
-     * Finds the AuthItem model based on its primary key value.
+     * Finds the AuthAssignment model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param string $name Name
-     * @return AuthItem the loaded model
+     * @param string $item_name
+     * @param int $user_id
+     * @return AuthAssignment the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
-    protected function findModel($name)
+    protected function findModel($item_name, $user_id)
     {
-        if (($model = AuthItem::findOne($name)) !== null) {
+        if (($model = AuthAssignment::findOne(['item_name' => $item_name, 'user_id' => $user_id])) !== null) {
             return $model;
         }
 
-        throw new NotFoundHttpException(Yii::t('AuthItem', 'The requested page does not exist.'));
+        throw new NotFoundHttpException(Yii::t('AuthAssignment', 'The requested page does not exist.'));
     }
 
     /**
-     * Creates a new AuthItem model.
+     * Creates a new AuthAssignment model.
      * If creation is successful, the browser will be redirected to the 'view' page.
-     * @return mixed
+     * @return string|\yii\web\Response
      */
     public function actionCreate()
     {
-        $model = new AuthItem();
+        $model = new AuthAssignment();
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post()) && $model->save()) {
-                return $this->redirect(['view', 'name' => $model->name]);
+                return $this->redirect(['view', 'item_name' => $model->item_name, 'user_id' => $model->user_id]);
             }
         } else {
             $model->loadDefaultValues();
@@ -98,18 +101,19 @@ class AuthItemController extends Controller
     }
 
     /**
-     * Updates an existing AuthItem model.
+     * Updates an existing AuthAssignment model.
      * If update is successful, the browser will be redirected to the 'view' page.
-     * @param string $name Name
-     * @return mixed
+     * @param string $item_name
+     * @param int $user_id
+     * @return string|\yii\web\Response
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionUpdate($name)
+    public function actionUpdate($item_name, $user_id)
     {
-        $model = $this->findModel($name);
+        $model = $this->findModel($item_name, $user_id);
 
         if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'name' => $model->name]);
+            return $this->redirect(['view', 'item_name' => $model->item_name, 'user_id' => $model->user_id]);
         }
 
         return $this->render('update', [
@@ -118,15 +122,16 @@ class AuthItemController extends Controller
     }
 
     /**
-     * Deletes an existing AuthItem model.
+     * Deletes an existing AuthAssignment model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param string $name Name
-     * @return mixed
+     * @param string $item_name
+     * @param int $user_id
+     * @return \yii\web\Response
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionDelete($name)
+    public function actionDelete($item_name, $user_id)
     {
-        $this->findModel($name)->delete();
+        $this->findModel($item_name, $user_id)->delete();
 
         return $this->redirect(['index']);
     }

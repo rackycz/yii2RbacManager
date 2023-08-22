@@ -1,15 +1,15 @@
 <?php
 
-namespace app\modules\yii2RbacManager\models;
+namespace app\modules\yii2RbacManager\models\search;
 
+use app\modules\yii2RbacManager\models\AuthItemChild as AuthItemChildModel;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use app\modules\yii2RbacManager\models\AuthItem;
 
 /**
- * AuthItemSearch represents the model behind the search form of `app\modules\yii2RbacManager\models\AuthItem`.
+ * AuthItemChild represents the model behind the search form of `app\modules\yii2RbacManager\models\AuthItemChild`.
  */
-class AuthItemSearch extends AuthItem
+class AuthItemChild extends AuthItemChildModel
 {
     /**
      * {@inheritdoc}
@@ -17,8 +17,7 @@ class AuthItemSearch extends AuthItem
     public function rules()
     {
         return [
-            [['name', 'description', 'rule_name', 'data'], 'safe'],
-            [['type', 'created_at', 'updated_at'], 'integer'],
+            [['parent', 'child'], 'safe'],
         ];
     }
 
@@ -40,7 +39,7 @@ class AuthItemSearch extends AuthItem
      */
     public function search($params)
     {
-        $query = AuthItem::find();
+        $query = AuthItemChildModel::find();
 
         // add conditions that should always apply here
 
@@ -57,16 +56,8 @@ class AuthItemSearch extends AuthItem
         }
 
         // grid filtering conditions
-        $query->andFilterWhere([
-            'type' => $this->type,
-            'created_at' => $this->created_at,
-            'updated_at' => $this->updated_at,
-        ]);
-
-        $query->andFilterWhere(['like', 'name', $this->name])
-            ->andFilterWhere(['like', 'description', $this->description])
-            ->andFilterWhere(['like', 'rule_name', $this->rule_name])
-            ->andFilterWhere(['like', 'data', $this->data]);
+        $query->andFilterWhere(['like', 'parent', $this->parent])
+            ->andFilterWhere(['like', 'child', $this->child]);
 
         return $dataProvider;
     }

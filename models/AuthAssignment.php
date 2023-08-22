@@ -20,7 +20,8 @@ class AuthAssignment extends \yii\db\ActiveRecord
      */
     public static function tableName()
     {
-        return \Yii::$app->controller->module->authAssignment['tableName'];
+        return '{{%auth_assignment}}';
+        //return \Yii::$app->controller->module->authAssignment['tableName'];
     }
 
     /**

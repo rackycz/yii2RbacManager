@@ -2,16 +2,16 @@
 
 namespace app\modules\yii2RbacManager\controllers;
 
-use app\modules\yii2RbacManager\models\AuthItem;
-use app\modules\yii2RbacManager\models\search\AuthItemSearch;
+use app\controllers\BaseController;
+use app\modules\yii2RbacManager\models\AuthRule;
+use app\modules\yii2RbacManager\models\search\AuthRule as AuthRuleSearch;
 use yii\filters\VerbFilter;
-use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 
 /**
- * AuthItemController implements the CRUD actions for AuthItem model.
+ * AuthRuleController implements the CRUD actions for AuthRule model.
  */
-class AuthItemController extends Controller
+class AuthRuleController extends BaseController
 {
     /**
      * @inheritDoc
@@ -32,12 +32,13 @@ class AuthItemController extends Controller
     }
 
     /**
-     * Lists all AuthItem models.
-     * @return mixed
+     * Lists all AuthRule models.
+     *
+     * @return string
      */
     public function actionIndex()
     {
-        $searchModel = new AuthItemSearch();
+        $searchModel = new AuthRuleSearch();
         $dataProvider = $searchModel->search($this->request->queryParams);
 
         return $this->render('index', [
@@ -47,9 +48,9 @@ class AuthItemController extends Controller
     }
 
     /**
-     * Displays a single AuthItem model.
-     * @param string $name Name
-     * @return mixed
+     * Displays a single AuthRule model.
+     * @param string $name
+     * @return string
      * @throws NotFoundHttpException if the model cannot be found
      */
     public function actionView($name)
@@ -60,29 +61,29 @@ class AuthItemController extends Controller
     }
 
     /**
-     * Finds the AuthItem model based on its primary key value.
+     * Finds the AuthRule model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param string $name Name
-     * @return AuthItem the loaded model
+     * @param string $name
+     * @return AuthRule the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($name)
     {
-        if (($model = AuthItem::findOne($name)) !== null) {
+        if (($model = AuthRule::findOne(['name' => $name])) !== null) {
             return $model;
         }
 
-        throw new NotFoundHttpException(Yii::t('AuthItem', 'The requested page does not exist.'));
+        throw new NotFoundHttpException(Yii::t('AuthRule', 'The requested page does not exist.'));
     }
 
     /**
-     * Creates a new AuthItem model.
+     * Creates a new AuthRule model.
      * If creation is successful, the browser will be redirected to the 'view' page.
-     * @return mixed
+     * @return string|\yii\web\Response
      */
     public function actionCreate()
     {
-        $model = new AuthItem();
+        $model = new AuthRule();
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post()) && $model->save()) {
@@ -98,10 +99,10 @@ class AuthItemController extends Controller
     }
 
     /**
-     * Updates an existing AuthItem model.
+     * Updates an existing AuthRule model.
      * If update is successful, the browser will be redirected to the 'view' page.
-     * @param string $name Name
-     * @return mixed
+     * @param string $name
+     * @return string|\yii\web\Response
      * @throws NotFoundHttpException if the model cannot be found
      */
     public function actionUpdate($name)
@@ -118,10 +119,10 @@ class AuthItemController extends Controller
     }
 
     /**
-     * Deletes an existing AuthItem model.
+     * Deletes an existing AuthRule model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param string $name Name
-     * @return mixed
+     * @param string $name
+     * @return \yii\web\Response
      * @throws NotFoundHttpException if the model cannot be found
      */
     public function actionDelete($name)
