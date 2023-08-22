@@ -21,8 +21,8 @@ class AuthRule extends \yii\db\ActiveRecord
      */
     public static function tableName()
     {
-      return '{{%auth_rule}}';
-      //return \Yii::$app->controller->module->authRule['tableName'];
+      //return '{{%auth_rule}}';
+      return \Yii::$app->controller->module->authRule['tableName'];
     }
 
     /**
