@@ -383,7 +383,7 @@ echo $this->render('card', [
 
   echo $this->render('card', [
     'title' => Yii::t('rbacm', 'Tree of controllers and actions'),
-    'text' => Yii::t('rbacm', 'These controllers and actions wese found in folders you specified in modul-config in value <strong>scannedControllerFolders</strong>.'),
+    'text' => Yii::t('rbacm', 'These controllers and actions wese found in folders you specified in modul-config in value <strong>scannedControllerFolders</strong>.<br><br>If this list is empty, uncomment renderTreeData() in dashboard/index.php'),
     'grid' => '', //AuthItemChild::renderTreeData(AuthItem::getAllControllersAndActions(), true),
     'code' => $code,
     'codeId' => 'controller-action-tree',
