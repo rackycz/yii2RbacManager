@@ -93,6 +93,26 @@ class yii2RbacManager extends \yii\base\Module
             'basePath' => '@app/modules/yii2RbacManager/messages',
             'sourceLanguage' => 'en-US',
         ];
+        $components['i18n']['translations']['AuthItem'] = [
+            'class' => 'yii\i18n\PhpMessageSource',
+            'basePath' => '@app/modules/yii2RbacManager/messages',
+            'sourceLanguage' => 'en-US',
+        ];
+        $components['i18n']['translations']['AuthRule'] = [
+            'class' => 'yii\i18n\PhpMessageSource',
+            'basePath' => '@app/modules/yii2RbacManager/messages',
+            'sourceLanguage' => 'en-US',
+        ];
+        $components['i18n']['translations']['AuthAssignment'] = [
+            'class' => 'yii\i18n\PhpMessageSource',
+            'basePath' => '@app/modules/yii2RbacManager/messages',
+            'sourceLanguage' => 'en-US',
+        ];
+        $components['i18n']['translations']['AuthItemChild'] = [
+            'class' => 'yii\i18n\PhpMessageSource',
+            'basePath' => '@app/modules/yii2RbacManager/messages',
+            'sourceLanguage' => 'en-US',
+        ];
 
         // If you are using themes, you might need to set the "theme" also for this module:
         $components['view']['theme'] = [
