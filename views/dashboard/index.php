@@ -1,7 +1,7 @@
 <?php
 
-use app\modules\yii2RbacManager\models\AuthItemChild;
 use app\modules\yii2RbacManager\models\AuthItem;
+use app\modules\yii2RbacManager\models\AuthItemChild;
 
 ?>
 
@@ -61,14 +61,14 @@ create table `auth_assignment`
 ) engine InnoDB;
 SQL;
 
-$imgUrl = \yii\helpers\Url::to(['dashboard/get-image', 'image' => 'rbac.svg'],true);
+$imgUrl = \yii\helpers\Url::to(['dashboard/get-image', 'image' => 'rbac.svg'], true);
 echo $this->render('card', [
-'title' => Yii::t('rbacm', 'These tables should be in your DB'),
-'text' => Yii::t('rbacm', 'This RBAC manager will tell you what the tables contain and will try to put it into context. If you have relations among your tables there should not be any PK-FK conflicts and some statistics might be useless as conflicts cannot exist ... (Names of tables and columns are configurable in this RBAC module)'),
-'grid' => '<div style="text-align: center;">' . \yii\helpers\Html::img($imgUrl) . '</div><br/>',
-'code' => $authTablesSql,
-'codeId' => 'auth-tables-creation',
-'showButtonLabel' => 'Show code',
+    'title' => Yii::t('rbacm', 'These tables should be in your DB'),
+    'text' => Yii::t('rbacm', 'This RBAC manager will tell you what the tables contain and will try to put it into context. If you have relations among your tables there should not be any PK-FK conflicts and some statistics might be useless as conflicts cannot exist ... (Names of tables and columns are configurable in this RBAC module)'),
+    'grid' => '<div style="text-align: center;">' . \yii\helpers\Html::img($imgUrl) . '</div><br/>',
+    'code' => $authTablesSql,
+    'codeId' => 'auth-tables-creation',
+    'showButtonLabel' => 'Show code',
 ]);
 ?>
 
@@ -76,22 +76,22 @@ echo $this->render('card', [
 
 <div class="card">
     <div class="card-header">
-      <?php echo Yii::t('rbacm', 'Here you can directly edit Auth tables'); ?>
+        <?php echo Yii::t('rbacm', 'Here you can directly edit Auth tables'); ?>
     </div>
     <div class="card-body">
         <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups"
              style="justify-content: center;">
             <div class="btn-group mr-2" role="group" aria-label="First group">
-                <button type="button" class="btn btn-primary">AuthItem</button>
+                <?= \yii\helpers\Html::a('AuthItem', ['auth-item/index'], ['class' => 'btn btn-primary']) ?>
             </div>
             <div class="btn-group mr-2" role="group" aria-label="First group">
-                <button type="button" class="btn btn-primary">AuthItemChild</button>
+                <?= \yii\helpers\Html::a('AuthItemChild', ['auth-item-child/index'], ['class' => 'btn btn-primary']) ?>
             </div>
             <div class="btn-group mr-2" role="group" aria-label="First group">
-                <button type="button" class="btn btn-primary">AuthRule</button>
+                <?= \yii\helpers\Html::a('AuthRule', ['auth-rule/index'], ['class' => 'btn btn-primary']) ?>
             </div>
             <div class="btn-group mr-2" role="group" aria-label="First group">
-                <button type="button" class="btn btn-primary">AuthAssignment</button>
+                <?= \yii\helpers\Html::a('AuthAssignment', ['auth-assignment/index'], ['class' => 'btn btn-primary']) ?>
             </div>
         </div>
     </div>
@@ -102,14 +102,14 @@ echo $this->render('card', [
 <br>
 
 <div class="card-deck">
-  <?php
-  $getParentsWithoutAuthItem = AuthItemChild::getParentsWithoutAuthItem();
-  $dataProvider = new yii\data\ArrayDataProvider([
-    'allModels' => $getParentsWithoutAuthItem['data'],
-    'pagination' => [
-      'pageSize' => 10
-    ],
-  ]);
+    <?php
+    $getParentsWithoutAuthItem = AuthItemChild::getParentsWithoutAuthItem();
+    $dataProvider = new yii\data\ArrayDataProvider([
+        'allModels' => $getParentsWithoutAuthItem['data'],
+        'pagination' => [
+            'pageSize' => 10
+        ],
+    ]);
 
     $grid = yii\grid\GridView::widget([
         'dataProvider' => $dataProvider,
@@ -131,14 +131,14 @@ echo $this->render('card', [
 
     <br>
 
-  <?php
-  $getParentsWithoutAuthItem = AuthItemChild::getChildrenWithoutAuthItem();
-  $dataProvider = new yii\data\ArrayDataProvider([
-    'allModels' => $getParentsWithoutAuthItem['data'],
-    'pagination' => [
-      'pageSize' => 10
-    ],
-  ]);
+    <?php
+    $getParentsWithoutAuthItem = AuthItemChild::getChildrenWithoutAuthItem();
+    $dataProvider = new yii\data\ArrayDataProvider([
+        'allModels' => $getParentsWithoutAuthItem['data'],
+        'pagination' => [
+            'pageSize' => 10
+        ],
+    ]);
 
     $grid = yii\grid\GridView::widget([
         'dataProvider' => $dataProvider,
@@ -162,14 +162,14 @@ echo $this->render('card', [
 <br>
 
 <div class="card-deck">
-  <?php
-  $topParents = AuthItemChild::getTopParents();
-  $dataProvider = new yii\data\ArrayDataProvider([
-    'allModels' => $topParents['data'],
-    'pagination' => [
-      'pageSize' => 10
-    ],
-  ]);
+    <?php
+    $topParents = AuthItemChild::getTopParents();
+    $dataProvider = new yii\data\ArrayDataProvider([
+        'allModels' => $topParents['data'],
+        'pagination' => [
+            'pageSize' => 10
+        ],
+    ]);
 
     $grid = yii\grid\GridView::widget([
         'dataProvider' => $dataProvider,
@@ -191,13 +191,13 @@ echo $this->render('card', [
 
     <br>
 
-  <?php
+    <?php
 
-  ini_set('xdebug.var_display_max_depth', 10);
-  ini_set('xdebug.var_display_max_children', 256);
-  ini_set('xdebug.var_display_max_data', 1024);
-  $treeData = AuthItemChild::getParentChildTreeData(false);
-  $tree = AuthItemChild::renderTreeData($treeData);
+    ini_set('xdebug.var_display_max_depth', 10);
+    ini_set('xdebug.var_display_max_children', 256);
+    ini_set('xdebug.var_display_max_data', 1024);
+    $treeData = AuthItemChild::getParentChildTreeData(false);
+    $tree = AuthItemChild::renderTreeData($treeData);
 
     echo $this->render('card', [
         'title' => Yii::t('rbacm', 'Parent-child tree defined in table <code>AuthItemChild</code>'),
@@ -208,28 +208,28 @@ echo $this->render('card', [
         'showButtonLabel' => 'Show code',
     ]);
 
-  ?>
+    ?>
 </div>
 
 <br>
 
 <div class="card-deck">
-  <?php
-  $authItemsNotUsedInAuthTree = AuthItem::getAuthItemsNotUsedInAuthTree();
-  $dataProvider = new yii\data\ArrayDataProvider([
-    'allModels' => $authItemsNotUsedInAuthTree['data'],
-    'pagination' => [
-      'pageSize' => 10
-    ],
-  ]);
+    <?php
+    $authItemsNotUsedInAuthTree = AuthItem::getAuthItemsNotUsedInAuthTree();
+    $dataProvider = new yii\data\ArrayDataProvider([
+        'allModels' => $authItemsNotUsedInAuthTree['data'],
+        'pagination' => [
+            'pageSize' => 10
+        ],
+    ]);
 
-  $grid = yii\grid\GridView::widget([
-    'dataProvider' => $dataProvider,
-    'layout' => "{items}\n{pager}\n{summary}",
-    'columns' => [
-      'itemName',
-    ],
-  ]);
+    $grid = yii\grid\GridView::widget([
+        'dataProvider' => $dataProvider,
+        'layout' => "{items}\n{pager}\n{summary}",
+        'columns' => [
+            'itemName',
+        ],
+    ]);
 
     yii\widgets\Pjax::begin([
         'id' => 'abc123',
@@ -249,14 +249,14 @@ echo $this->render('card', [
 
     <br>
 
-  <?php
-  $authItemsAssignedToAUser = AuthItem::getAuthItemsAssignedToAUser();
-  $dataProvider = new yii\data\ArrayDataProvider([
-    'allModels' => $authItemsAssignedToAUser['data'],
-    'pagination' => [
-      'pageSize' => 10
-    ],
-  ]);
+    <?php
+    $authItemsAssignedToAUser = AuthItem::getAuthItemsAssignedToAUser();
+    $dataProvider = new yii\data\ArrayDataProvider([
+        'allModels' => $authItemsAssignedToAUser['data'],
+        'pagination' => [
+            'pageSize' => 10
+        ],
+    ]);
 
     $grid = yii\grid\GridView::widget([
         'dataProvider' => $dataProvider,
@@ -278,14 +278,14 @@ echo $this->render('card', [
 <br>
 
 <div class="card-deck">
-  <?php
-  $authItemsAssignedToAUser = AuthItem::getAuthItemsAssignedToAUserButWithoutAuthItem();
-  $dataProvider = new yii\data\ArrayDataProvider([
-    'allModels' => $authItemsAssignedToAUser['data'],
-    'pagination' => [
-      'pageSize' => 10
-    ],
-  ]);
+    <?php
+    $authItemsAssignedToAUser = AuthItem::getAuthItemsAssignedToAUserButWithoutAuthItem();
+    $dataProvider = new yii\data\ArrayDataProvider([
+        'allModels' => $authItemsAssignedToAUser['data'],
+        'pagination' => [
+            'pageSize' => 10
+        ],
+    ]);
 
     $grid = yii\grid\GridView::widget([
         'dataProvider' => $dataProvider,
@@ -319,20 +319,20 @@ echo $this->render('card', [
         'showButtonLabel' => 'Show code',
     ]);
 
-  ?>
+    ?>
 </div>
 
 <br>
 
 <div class="card-deck">
-  <?php
-  $authItemsNrOfRolesAndPermissions = AuthItem::getNrOrRolesAndPermissions();
-  $dataProvider = new yii\data\ArrayDataProvider([
-    'allModels' => $authItemsNrOfRolesAndPermissions['data'],
-    'pagination' => [
-      'pageSize' => 10
-    ],
-  ]);
+    <?php
+    $authItemsNrOfRolesAndPermissions = AuthItem::getNrOrRolesAndPermissions();
+    $dataProvider = new yii\data\ArrayDataProvider([
+        'allModels' => $authItemsNrOfRolesAndPermissions['data'],
+        'pagination' => [
+            'pageSize' => 10
+        ],
+    ]);
 
     $grid = yii\grid\GridView::widget([
         'dataProvider' => $dataProvider,
@@ -362,34 +362,34 @@ echo $this->render('card', [
 
     <br>
 
-  <?php
-  $authItemsAssignedToAUser = AuthItem::getAuthItemsAssignedToAUser();
-  $dataProvider = new yii\data\ArrayDataProvider([
-    'allModels' => $authItemsAssignedToAUser['data'],
-    'pagination' => [
-      'pageSize' => 10
-    ],
-  ]);
+    <?php
+    $authItemsAssignedToAUser = AuthItem::getAuthItemsAssignedToAUser();
+    $dataProvider = new yii\data\ArrayDataProvider([
+        'allModels' => $authItemsAssignedToAUser['data'],
+        'pagination' => [
+            'pageSize' => 10
+        ],
+    ]);
 
-  $grid = yii\grid\GridView::widget([
-    'dataProvider' => $dataProvider,
-    'layout' => "{items}\n{pager}\n{summary}",
-    'columns' => [
-      'itemName',
-    ],
-  ]);
+    $grid = yii\grid\GridView::widget([
+        'dataProvider' => $dataProvider,
+        'layout' => "{items}\n{pager}\n{summary}",
+        'columns' => [
+            'itemName',
+        ],
+    ]);
 
-  $code = implode('<br>', array_keys(\Yii::$app->controller->module->scannedControllerFolders));
+    $code = implode('<br>', array_keys(\Yii::$app->controller->module->scannedControllerFolders));
 
-  echo $this->render('card', [
-    'title' => Yii::t('rbacm', 'Tree of controllers and actions'),
-    'text' => Yii::t('rbacm', 'These controllers and actions wese found in folders you specified in modul-config in value <strong>scannedControllerFolders</strong>.<br><br>If this list is empty, uncomment renderTreeData() in dashboard/index.php'),
-    'grid' => '', //AuthItemChild::renderTreeData(AuthItem::getAllControllersAndActions(), true),
-    'code' => $code,
-    'codeId' => 'controller-action-tree',
-    'showButtonLabel' => 'Show folders',
-  ]);
-  ?>
+    echo $this->render('card', [
+        'title' => Yii::t('rbacm', 'Tree of controllers and actions'),
+        'text' => Yii::t('rbacm', 'These controllers and actions wese found in folders you specified in modul-config in value <strong>scannedControllerFolders</strong>.<br><br>If this list is empty, uncomment renderTreeData() in dashboard/index.php'),
+        'grid' => '', //AuthItemChild::renderTreeData(AuthItem::getAllControllersAndActions(), true),
+        'code' => $code,
+        'codeId' => 'controller-action-tree',
+        'showButtonLabel' => 'Show folders',
+    ]);
+    ?>
 </div>
 
 <?php

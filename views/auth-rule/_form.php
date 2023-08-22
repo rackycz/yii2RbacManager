@@ -16,9 +16,9 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'data')->textInput() ?>
 
-    <?= $form->field($model, 'created_at')->textInput() ?>
+    <?php // echo $form->field($model, 'created_at')->textInput() ?>
 
-    <?= $form->field($model, 'updated_at')->textInput() ?>
+    <?php // echo $form->field($model, 'updated_at')->textInput() ?>
 
     <div class="form-group">
         <?= Html::submitButton(Yii::t('AuthRule', 'Save'), ['class' => 'btn btn-success']) ?>

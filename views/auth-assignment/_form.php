@@ -1,5 +1,7 @@
 <?php
 
+use app\models\User;
+use app\modules\yii2RbacManager\models\AuthItem;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
@@ -12,11 +14,14 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'item_name')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'item_name')->dropDownList(AuthItem::getFilterData('name', AuthItem::class, 'name', function ($relatedModel, $defaultValue) {
+        return $relatedModel->name;
+    })) ?>
 
-    <?= $form->field($model, 'user_id')->textInput() ?>
-
-    <?= $form->field($model, 'created_at')->textInput() ?>
+    <?= $form->field($model, 'user_id')->dropDownList(User::getFilterData('id', User::class, 'id', function ($relatedModel, $defaultValue) {
+        return $relatedModel->email;
+    })) ?>
+    <?php // echo $form->field($model, 'created_at')->textInput() ?>
 
     <div class="form-group">
         <?= Html::submitButton(Yii::t('AuthAssignment', 'Save'), ['class' => 'btn btn-success']) ?>

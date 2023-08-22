@@ -3,6 +3,7 @@
 namespace app\modules\yii2RbacManager\models;
 
 use Yii;
+use yii\helpers\ArrayHelper;
 
 /**
  * This is the model class for table "auth_item".
@@ -256,4 +257,36 @@ GROUP BY $authItemType";
     sort($result);
     return array_fill_keys($result, ''); // values are used as keys. This is needed in renderTreeData()
   }
+
+
+    /**
+     * Returns distinct-list of values in $column.
+     *
+     * If $relatedModel and other parameters are provided, list-data is returned in format ['id' => 'Text'].
+     * This can be used in dropDownLists as source of data.
+     *
+     * Shouldn't be used in case of large tables.
+     *
+     * See how $from and $to values are treated in ArrayHelper::map() to understand the 2 last arguments of getFilterData()
+     *
+     * @param $column
+     * @param null $relatedModel
+     * @param string $relatedPkCol
+     * @param string $relatedDisplayValue if NULL, getFilterText() will be used
+     * @return array
+     */
+    public static function getFilterData($column, $relatedModel = null, $relatedPkCol = 'id', $relatedDisplayValue = null)
+    {
+        $usedValues = ArrayHelper::getColumn(self::find()->select($column)->distinct()->asArray()->all(), $column);
+        if (!$relatedModel) {
+            return $usedValues;
+        }
+
+        $relatedDisplayValue = $relatedDisplayValue ?? function ($relatedModel, $defaultValue) {
+                // See how $from and $to values are treated in ArrayHelper::map() to understand the 2 last arguments of Blog::getFilterData()
+                return $relatedModel->getFilterText();
+            };
+
+        return ArrayHelper::map($relatedModel::find()->andWhere([$relatedPkCol => $usedValues])->all(), $relatedPkCol, $relatedDisplayValue);
+    }
 }
