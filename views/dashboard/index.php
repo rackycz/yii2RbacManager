@@ -61,10 +61,11 @@ create table `auth_assignment`
 ) engine InnoDB;
 SQL;
 
+$imgUrl = \yii\helpers\Url::to(['dashboard/get-image', 'image' => 'rbac.svg'],true);
 echo $this->render('card', [
 'title' => Yii::t('rbacm', 'These tables should be in your DB'),
 'text' => Yii::t('rbacm', 'This RBAC manager will tell you what the tables contain and will try to put it into context. If you have relations among your tables there should not be any PK-FK conflicts and some statistics might be useless as conflicts cannot exist ... (Names of tables and columns are configurable in this RBAC module)'),
-'grid' => '<div style="text-align: center;">' . \yii\helpers\Html::img('@web/rbac.svg') . '</div><br/>',
+'grid' => '<div style="text-align: center;">' . \yii\helpers\Html::img($imgUrl) . '</div><br/>',
 'code' => $authTablesSql,
 'codeId' => 'auth-tables-creation',
 'showButtonLabel' => 'Show code',
