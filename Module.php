@@ -25,7 +25,7 @@ use Yii;
   ],
 ],
  */
-class yii2RbacManager extends \yii\base\Module
+class Module extends \yii\base\Module
 {
   /**
    * {@inheritdoc}
