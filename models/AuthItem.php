@@ -252,6 +252,6 @@ GROUP BY $authItemType";
 
     }
     sort($result);
-    return $result;
+    return array_fill_keys($result, ''); // values are used as keys. This is needed in renderTreeData()
   }
 }

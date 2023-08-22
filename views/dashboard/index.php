@@ -110,23 +110,23 @@ echo $this->render('card', [
     ],
   ]);
 
-  $grid = yii\grid\GridView::widget([
-    'dataProvider' => $dataProvider,
-    'layout' => "{items}\n{pager}\n{summary}",
-    'columns' => [
-      'parent',
-      'assignedToNrOfUsers',
-    ],
-  ]);
-  echo $this->render('card', [
-    'title' => Yii::t('rbacm', 'Parents in AuthItemChild without AuthItem'),
-    'text' => Yii::t('rbacm', 'Here you can see which items are used as parents in table AuthItemChild but are not defined in AuthItem. If such an item is assigned to a user, number of these users is displayed as well.'),
-    'grid' => $grid,
-    'code' => $getParentsWithoutAuthItem['code'],
-    'codeId' => 'parents-without-authitem',
-    'showButtonLabel' => 'Show code',
-  ]);
-  ?>
+    $grid = yii\grid\GridView::widget([
+        'dataProvider' => $dataProvider,
+        'layout' => "{items}\n{pager}\n{summary}",
+        'columns' => [
+            'parent',
+            'assignedToNrOfUsers',
+        ],
+    ]);
+    echo $this->render('card', [
+        'title' => Yii::t('rbacm', 'Parents in <code>AuthItemChild</code> without <code>AuthItem</code>'),
+        'text' => Yii::t('rbacm', 'Here you can see which items are used as <code>parents</code> in table <code>AuthItemChild</code> but are not defined in <code>AuthItem</code>. If such an item is assigned to a user, number of these users is displayed as well.'),
+        'grid' => $grid,
+        'code' => $getParentsWithoutAuthItem['code'],
+        'codeId' => 'parents-without-authitem',
+        'showButtonLabel' => 'Show code',
+    ]);
+    ?>
 
     <br>
 
@@ -139,23 +139,23 @@ echo $this->render('card', [
     ],
   ]);
 
-  $grid = yii\grid\GridView::widget([
-    'dataProvider' => $dataProvider,
-    'layout' => "{items}\n{pager}\n{summary}",
-    'columns' => [
-      'child',
-      'assignedToNrOfUsers',
-    ],
-  ]);
-  echo $this->render('card', [
-    'title' => Yii::t('rbacm', 'Children in AuthItemChild without AuthItem'),
-    'text' => Yii::t('rbacm', 'Here you can see which items are used as children in table AuthItemChild but are not defined in AuthItem. If such an item is assigned to a user, number of these users is displayed as well.'),
-    'grid' => $grid,
-    'code' => $getParentsWithoutAuthItem['code'],
-    'codeId' => 'children-without-authitem',
-    'showButtonLabel' => 'Show code',
-  ]);
-  ?>
+    $grid = yii\grid\GridView::widget([
+        'dataProvider' => $dataProvider,
+        'layout' => "{items}\n{pager}\n{summary}",
+        'columns' => [
+            'child',
+            'assignedToNrOfUsers',
+        ],
+    ]);
+    echo $this->render('card', [
+        'title' => Yii::t('rbacm', 'Children in <code>AuthItemChild</code> without <code>AuthItem</code>'),
+        'text' => Yii::t('rbacm', 'Here you can see which items are used as <code>children</code> in table <code>AuthItemChild</code> but are not defined in <code>AuthItem</code>. If such an item is assigned to a user, number of these users is displayed as well.'),
+        'grid' => $grid,
+        'code' => $getParentsWithoutAuthItem['code'],
+        'codeId' => 'children-without-authitem',
+        'showButtonLabel' => 'Show code',
+    ]);
+    ?>
 </div>
 
 <br>
@@ -170,23 +170,23 @@ echo $this->render('card', [
     ],
   ]);
 
-  $grid = yii\grid\GridView::widget([
-    'dataProvider' => $dataProvider,
-    'layout' => "{items}\n{pager}\n{summary}",
-    'columns' => [
-      'parent',
-      'assignedToNrOfUsers',
-    ],
-  ]);
-  echo $this->render('card', [
-    'title' => Yii::t('rbacm', 'Top parents in AuthItemChild'),
-    'text' => Yii::t('rbacm', 'Here you can see which items are only used as parents and never as children in table AuthItemChild.'),
-    'grid' => $grid,
-    'code' => $topParents['code'],
-    'codeId' => 'top-parents-without-authitem',
-    'showButtonLabel' => 'Show code',
-  ]);
-  ?>
+    $grid = yii\grid\GridView::widget([
+        'dataProvider' => $dataProvider,
+        'layout' => "{items}\n{pager}\n{summary}",
+        'columns' => [
+            'item',
+            'assignedToNrOfUsers',
+        ],
+    ]);
+    echo $this->render('card', [
+        'title' => Yii::t('rbacm', 'Top parents in <code>AuthItemChild</code>'),
+        'text' => Yii::t('rbacm', 'Here you can see which items are only used as <code>parents</code> and never as <code>children</code> in table <code>AuthItemChild</code>.'),
+        'grid' => $grid,
+        'code' => $topParents['code'],
+        'codeId' => 'top-parents-without-authitem',
+        'showButtonLabel' => 'Show code',
+    ]);
+    ?>
 
     <br>
 
@@ -198,14 +198,14 @@ echo $this->render('card', [
   $treeData = AuthItemChild::getParentChildTreeData(false);
   $tree = AuthItemChild::renderTreeData($treeData);
 
-  echo $this->render('card', [
-    'title' => Yii::t('rbacm', 'Parent-child tree defined in table AuthItemChild'),
-    'text' => Yii::t('rbacm', 'Here you can see the actual tree of all Roles and Permissions'),
-    'grid' => $tree,
-    'code' => 'None',
-    'codeId' => 'parent-children-tree',
-    'showButtonLabel' => 'Show code',
-  ]);
+    echo $this->render('card', [
+        'title' => Yii::t('rbacm', 'Parent-child tree defined in table <code>AuthItemChild</code>'),
+        'text' => Yii::t('rbacm', 'Here you can see the actual tree of all Roles and Permissions'),
+        'grid' => $tree,
+        'code' => 'None',
+        'codeId' => 'parent-children-tree',
+        'showButtonLabel' => 'Show code',
+    ]);
 
   ?>
 </div>
@@ -230,21 +230,21 @@ echo $this->render('card', [
     ],
   ]);
 
-  yii\widgets\Pjax::begin([
-    'id' => 'abc123',
-    'enablePushState' => false,
-    'enableReplaceState' => false
-  ]);
-  echo $this->render('card', [
-    'title' => Yii::t('rbacm', 'AuthItems not used in AuthItemChild'),
-    'text' => Yii::t('rbacm', 'Here you can see which AuthItems are not part of the tree defined in AuthItemChild.'),
-    'grid' => $grid,
-    'code' => $authItemsNotUsedInAuthTree['code'],
-    'codeId' => 'auth-items-not-used-in-auth-item-child',
-    'showButtonLabel' => 'Show code',
-  ]);
-  yii\widgets\Pjax::end();
-  ?>
+    yii\widgets\Pjax::begin([
+        'id' => 'abc123',
+        'enablePushState' => false,
+        'enableReplaceState' => false
+    ]);
+    echo $this->render('card', [
+        'title' => Yii::t('rbacm', '<code>AuthItems</code> not used in <code>AuthItemChild</code>'),
+        'text' => Yii::t('rbacm', 'Here you can see which <code>AuthItems</code> are not part of the tree defined in <code>AuthItemChild</code>.'),
+        'grid' => $grid,
+        'code' => $authItemsNotUsedInAuthTree['code'],
+        'codeId' => 'auth-items-not-used-in-auth-item-child',
+        'showButtonLabel' => 'Show code',
+    ]);
+    yii\widgets\Pjax::end();
+    ?>
 
     <br>
 
@@ -257,22 +257,22 @@ echo $this->render('card', [
     ],
   ]);
 
-  $grid = yii\grid\GridView::widget([
-    'dataProvider' => $dataProvider,
-    'layout' => "{items}\n{pager}\n{summary}",
-    'columns' => [
-      'itemName',
-    ],
-  ]);
-  echo $this->render('card', [
-    'title' => Yii::t('rbacm', 'AuthItems assigned to a user'),
-    'text' => Yii::t('rbacm', 'AuthItems assigned to a user in table AuthAssignment'),
-    'grid' => $grid,
-    'code' => $authItemsAssignedToAUser['code'],
-    'codeId' => 'auth-items-assigned-to-a-user',
-    'showButtonLabel' => 'Show code',
-  ]);
-  ?>
+    $grid = yii\grid\GridView::widget([
+        'dataProvider' => $dataProvider,
+        'layout' => "{items}\n{pager}\n{summary}",
+        'columns' => [
+            'itemName',
+        ],
+    ]);
+    echo $this->render('card', [
+        'title' => Yii::t('rbacm', '<code>AuthItems</code> assigned to a user'),
+        'text' => Yii::t('rbacm', '<code>AuthItems</code> assigned to a user in table <code>AuthAssignment</code>'),
+        'grid' => $grid,
+        'code' => $authItemsAssignedToAUser['code'],
+        'codeId' => 'auth-items-assigned-to-a-user',
+        'showButtonLabel' => 'Show code',
+    ]);
+    ?>
 </div>
 <br>
 
@@ -286,37 +286,37 @@ echo $this->render('card', [
     ],
   ]);
 
-  $grid = yii\grid\GridView::widget([
-    'dataProvider' => $dataProvider,
-    'layout' => "{items}\n{pager}\n{summary}",
-    'columns' => [
-      'itemName',
-    ],
-  ]);
-  echo $this->render('card', [
-    'title' => Yii::t('rbacm', 'AuthItems assigned to a user but without record in AuthItem'),
-    'text' => Yii::t('rbacm', 'AuthItems assigned to a user in table AuthAssignment but without a record in AuthItem'),
-    'grid' => $grid,
-    'code' => $authItemsAssignedToAUser['code'],
-    'codeId' => 'auth-items-assigned-to-a-user',
-    'showButtonLabel' => 'Show code',
-  ]);
-  ?>
-  <?php
-  ini_set('xdebug.var_display_max_depth', 10);
-  ini_set('xdebug.var_display_max_children', 256);
-  ini_set('xdebug.var_display_max_data', 1024);
-  $treeData = AuthItemChild::getParentChildTreeData(true);
-  $tree = AuthItemChild::renderTreeData($treeData);
+    $grid = yii\grid\GridView::widget([
+        'dataProvider' => $dataProvider,
+        'layout' => "{items}\n{pager}\n{summary}",
+        'columns' => [
+            'itemName',
+        ],
+    ]);
+    echo $this->render('card', [
+        'title' => Yii::t('rbacm', '<code>AuthItems</code> assigned to a user but without record in <code>AuthItem</code>'),
+        'text' => Yii::t('rbacm', '<code>AuthItems</code> assigned to a user in table <code>AuthAssignment</code> but without a record in <code>AuthItem</code>'),
+        'grid' => $grid,
+        'code' => $authItemsAssignedToAUser['code'],
+        'codeId' => 'auth-items-assigned-to-a-user',
+        'showButtonLabel' => 'Show code',
+    ]);
+    ?>
+    <?php
+    ini_set('xdebug.var_display_max_depth', 10);
+    ini_set('xdebug.var_display_max_children', 256);
+    ini_set('xdebug.var_display_max_data', 1024);
+    $treeData = AuthItemChild::getParentChildTreeData(true);
+    $tree = AuthItemChild::renderTreeData($treeData);
 
-  echo $this->render('card', [
-    'title' => Yii::t('rbacm', 'Child-parent (inverse) tree defined in table AuthItemChild'),
-    'text' => Yii::t('rbacm', 'Here you can see what parents does a certain peri'),
-    'grid' => $tree,
-    'code' => 'None',
-    'codeId' => 'parent-children-tree',
-    'showButtonLabel' => 'Show code',
-  ]);
+    echo $this->render('card', [
+        'title' => Yii::t('rbacm', 'Child-parent (inverse) tree defined in table <code>AuthItemChild</code>'),
+        'text' => Yii::t('rbacm', 'Here you can see what parents does a certain permission/role have'),
+        'grid' => $tree,
+        'code' => 'None',
+        'codeId' => 'parent-children-tree',
+        'showButtonLabel' => 'Show code',
+    ]);
 
   ?>
 </div>
@@ -333,31 +333,31 @@ echo $this->render('card', [
     ],
   ]);
 
-  $grid = yii\grid\GridView::widget([
-    'dataProvider' => $dataProvider,
-    'layout' => "{items}\n{pager}\n{summary}",
-    'columns' => [
-      [
-        'attribute' => 'type',
-        'value' => function ($model, $key, $index, $column) {
-          if ($model['type'] == yii\rbac\Item::TYPE_ROLE) {
-            return Yii::t('rbacm', 'Role');
-          }
-          return Yii::t('rbacm', 'Permission');
-        }
-      ],
-      'count',
-    ],
-  ]);
-  echo $this->render('card', [
-    'title' => Yii::t('rbacm', 'Nr of roles and permissions'),
-    'text' => Yii::t('rbacm', 'Nr of roles and permissions in table AuthItem.'),
-    'grid' => $grid,
-    'code' => $authItemsNrOfRolesAndPermissions['code'],
-    'codeId' => 'nr-of-roles-and-permissions',
-    'showButtonLabel' => 'Show code',
-  ]);
-  ?>
+    $grid = yii\grid\GridView::widget([
+        'dataProvider' => $dataProvider,
+        'layout' => "{items}\n{pager}\n{summary}",
+        'columns' => [
+            [
+                'attribute' => 'type',
+                'value' => function ($model, $key, $index, $column) {
+                    if ($model['type'] == yii\rbac\Item::TYPE_ROLE) {
+                        return Yii::t('rbacm', 'Role');
+                    }
+                    return Yii::t('rbacm', 'Permission');
+                }
+            ],
+            'count',
+        ],
+    ]);
+    echo $this->render('card', [
+        'title' => Yii::t('rbacm', 'Nr of roles and permissions'),
+        'text' => Yii::t('rbacm', 'Nr of roles and permissions in table <code>AuthItem</code>.'),
+        'grid' => $grid,
+        'code' => $authItemsNrOfRolesAndPermissions['code'],
+        'codeId' => 'nr-of-roles-and-permissions',
+        'showButtonLabel' => 'Show code',
+    ]);
+    ?>
 
     <br>
 

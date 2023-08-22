@@ -48,6 +48,15 @@ class yii2RbacManager extends \yii\base\Module
     '@app/controllers' => [
       'namespace' => 'app\controllers',
     ],
+    '@app/modules/admin/controllers' => [
+      'namespace' => 'app\modules\admin\controllers',
+    ],
+    '@app/modules/doc/controllers' => [
+      'namespace' => 'app\modules\doc\controllers',
+    ],
+    '@app/modules/settings/controllers' => [
+      'namespace' => 'app\modules\settings\controllers',
+    ],
   ];
 
   public $authAssignment = [
