@@ -115,19 +115,19 @@ class Module extends \yii\base\Module
         ];
 
         // If you are using themes, you might need to set the "theme" also for this module:
-        $components['view']['theme'] = [
-            'basePath' => '@app/modules/admin/themes/yii',
-            'baseUrl' => '@web/modules/admin/themes/yii',
-            'pathMap' => [
-                // Standard Yii theme with some enhancements:
-                '@app/views' => '@app/modules/admin/themes/yii',
-                '@app/modules/yii2RbacManager/views' => '@app/modules/admin/themes/yii',
-
-                // Original theme by Accelerate with some enhancements:
-                //'@app/views' => '@app/modules/admin/themes/accelerate',
-                //'@app/modules/yii2RbacManager/views' => '@app/modules/admin/themes/accelerate',
-            ],
-        ];
+//        $components['view']['theme'] = [
+//            'basePath' => '@app/modules/admin/themes/yii',
+//            'baseUrl' => '@web/modules/admin/themes/yii',
+//            'pathMap' => [
+//                // Standard Yii theme with some enhancements:
+//                '@app/views' => '@app/modules/admin/themes/yii',
+//                '@app/modules/yii2RbacManager/views' => '@app/modules/admin/themes/yii',
+//
+//                // Original theme by Accelerate with some enhancements:
+//                //'@app/views' => '@app/modules/admin/themes/accelerate',
+//                //'@app/modules/yii2RbacManager/views' => '@app/modules/admin/themes/accelerate',
+//            ],
+//        ];
 
         Yii::$app->components = $components;
   }
